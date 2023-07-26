@@ -20,9 +20,9 @@ func New() *Config {
 }
 
 func getEnv(key string, defaultVal string) string {
-	err := godotenv.Load("/.env")
+	err := godotenv.Load("/Projects/spotifyapi/.env")
 	if err != nil {
-		log.Print("No .env file found")
+		log.Print("No .env file found ", err)
 	}
 
 	if value, exists := os.LookupEnv(key); exists {
