@@ -19,9 +19,10 @@ func New() (*App, error) {
 	a.echo = echo.New()
 
 	// e.Use(authMiddleWare)
-	a.echo.GET("/login", a.auth.CompleteAuth)
-	a.echo.GET("/", a.auth.UserInfo) // userInfo
-	a.echo.GET("/authurl", a.auth.GetAuthUrl) // getAuthUrl
+	a.echo.GET("api/login", a.auth.CompleteAuth)
+	a.echo.GET("api/userinfo", a.auth.UserInfo)  // userInfo
+	a.echo.GET("api/authurl", a.auth.GetAuthUrl) // getAuthUrl
+	a.echo.GET("api/usertopartists", a.auth.UserTopArtists)
 
 	return a, nil
 }

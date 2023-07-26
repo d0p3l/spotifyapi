@@ -1,18 +1,39 @@
 package handlers
 
 import (
+	"log"
+
 	"github.com/labstack/echo/v4"
-	"github.com/zmb3/spotify/v2"
 )
 
 func (auth *Authentication) UserInfo(ctx echo.Context) error {
-	tok := auth.GiveToken(ctx)
-
-	client := spotify.New(auth.auth.Client(ctx.Request().Context(), tok))
+	client := auth.giveClient(ctx)
 	user, err := client.CurrentUser(ctx.Request().Context())
 	if err != nil {
 		return err
 	}
 
-	return ctx.JSON(200, user.User)
+	err = ctx.JSON(200, user.User)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (auth *Authentication) UserTopArtists(ctx echo.Context) error {
+	client := auth.giveClient(ctx)
+	user, err := client.CurrentUsersTopArtists(ctx.Request().Context())
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	err = ctx.JSON(200, user.Artists)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	return nil
 }
