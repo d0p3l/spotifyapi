@@ -17,20 +17,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-
-// func authMiddleWare(next echo.HandlerFunc) echo.HandlerFunc {
-// 	return func(ctx echo.Context) error {
-// 		tok := giveToken(ctx)
-
-// 		err := next(ctx)
-// 		if err != nil {
-// 			return err
-// 		}
-
-// 		return nil
-// 	}
-// }
-
-// func refreshToken(ctx echo.Context) error {
-
-// }

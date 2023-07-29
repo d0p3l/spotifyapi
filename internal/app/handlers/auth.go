@@ -9,8 +9,8 @@ import (
 )
 
 type Authentication struct {
-	spotifyauth  *spotifyauth.Authenticator
-	state string
+	spotifyauth *spotifyauth.Authenticator
+	state       string 
 }
 
 const redirectURI = "http://localhost:8080/api/login"
@@ -21,7 +21,7 @@ func New() *Authentication {
 		spotifyauth: spotifyauth.New(spotifyauth.WithRedirectURL(redirectURI), spotifyauth.WithScopes(spotifyauth.ScopeUserReadPrivate,
 			spotifyauth.ScopeUserTopRead, spotifyauth.ScopeUserReadRecentlyPlayed, spotifyauth.ScopeUserLibraryRead),
 			spotifyauth.WithClientID(confauth.SPOTIFY_ID), spotifyauth.WithClientSecret(confauth.SPOTIFY_SECRET)),
-		state: "abc1234",
+		state: "abc1234", // сделать рандомным?
 	}
 }
 
@@ -41,17 +41,6 @@ func (auth *Authentication) CompleteAuth(ctx echo.Context) error {
 
 	return nil
 }
-
-// func (auth *Authentication) GiveToken(ctx echo.Context) *oauth2.Token {
-// 	tok := &oauth2.Token{
-// 		AccessToken:  ctx.Request().Header.Get("Authorization"),
-// 		TokenType:    ctx.FormValue("token_type"),
-// 		RefreshToken: ctx.FormValue("refresh_token"),
-// 		Expiry:       time.Now(), // TODO сделать нормальный time date
-// 	}
-
-// 	return tok
-// }
 
 func (auth *Authentication) GetAuthUrl(ctx echo.Context) error {
 	url := auth.spotifyauth.AuthURL(auth.state)

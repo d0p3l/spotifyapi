@@ -23,6 +23,8 @@ func New() (*App, error) {
 	a.echo.GET("api/userinfo", a.auth.UserInfo)  // userInfo
 	a.echo.GET("api/authurl", a.auth.GetAuthUrl) // getAuthUrl
 	a.echo.GET("api/usertopartists", a.auth.UserTopArtists)
+	a.echo.GET("api/usertoptracks", a.auth.UserTopTracks)
+	a.echo.GET("api/recentlyplayedtracks", a.auth.RecentlyPlayedTracks)
 
 	return a, nil
 }

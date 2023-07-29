@@ -8,7 +8,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
-func (auth *Authentication) giveClient(ctx echo.Context) *spotify.Client {
+func (auth *Authentication) GiveClient(ctx echo.Context) *spotify.Client {
 	tok := giveToken(ctx)
 	return spotify.New(auth.spotifyauth.Client(ctx.Request().Context(), tok))
 }
