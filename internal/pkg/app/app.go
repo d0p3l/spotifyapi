@@ -5,6 +5,7 @@ import (
 
 	"github.com/d0p3l/spotifyapi/internal/app/handlers"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 type App struct {
@@ -18,6 +19,11 @@ func New() (*App, error) {
 	a.auth = handlers.New()
 	a.echo = echo.New()
 
+	a.echo.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
+	
 	// e.Use(authMiddleWare)
 	a.echo.GET("api/login", a.auth.CompleteAuth)
 	a.echo.GET("api/userinfo", a.auth.UserInfo)  // userInfo

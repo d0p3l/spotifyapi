@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/d0p3l/spotifyapi/internal/app/envconfig"
@@ -10,7 +11,7 @@ import (
 
 type Authentication struct {
 	spotifyauth *spotifyauth.Authenticator
-	state       string 
+	state       string
 }
 
 const redirectURI = "http://localhost:8080/api/login"
@@ -26,13 +27,20 @@ func New() *Authentication {
 }
 
 func (auth *Authentication) CompleteAuth(ctx echo.Context) error {
-	tok, err := auth.spotifyauth.Token(ctx.Request().Context(), auth.state, ctx.Request())
+	code := ctx.QueryParam("code")
+	actualState := ctx.QueryParam("state")
+	if actualState != auth.state {
+		return errors.New("spotify: redirect state parameter doesn't match")
+	}
+	tok, err := auth.spotifyauth.Exchange(ctx.Request().Context(), code)
+
+	// tok, err := auth.spotifyauth.Token(ctx.Request().Context(), auth.state, ctx.Request())
 	if err != nil {
 		return err
 	}
-	if st := ctx.FormValue("state"); st != auth.state {
-		return err
-	}
+	// if st := ctx.FormValue("state"); st != auth.state {
+	// 	return err
+	// }
 
 	err = ctx.JSON(200, tok)
 	if err != nil {
