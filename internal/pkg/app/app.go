@@ -23,14 +23,14 @@ func New() (*App, error) {
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
-	
+
 	// e.Use(authMiddleWare)
 	a.echo.GET("api/login", a.auth.CompleteAuth)
-	a.echo.GET("api/userinfo", a.auth.UserInfo)  // userInfo
+	a.echo.POST("api/userinfo", a.auth.UserInfo) // userInfo
 	a.echo.GET("api/authurl", a.auth.GetAuthUrl) // getAuthUrl
-	a.echo.GET("api/usertopartists", a.auth.UserTopArtists)
-	a.echo.GET("api/usertoptracks", a.auth.UserTopTracks)
-	a.echo.GET("api/recentlyplayedtracks", a.auth.RecentlyPlayedTracks)
+	a.echo.POST("api/usertopartists", a.auth.UserTopArtists)
+	a.echo.POST("api/usertoptracks", a.auth.UserTopTracks)
+	a.echo.POST("api/recentlyplayedtracks", a.auth.RecentlyPlayedTracks)
 
 	return a, nil
 }
