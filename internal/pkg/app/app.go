@@ -19,10 +19,11 @@ func New() (*App, error) {
 	a.auth = handlers.New()
 	a.echo = echo.New()
 
-	a.echo.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
-	}))
+	// a.echo.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+	// 	AllowOrigins: []string{"*"},
+	// 	AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	// }))
+	a.echo.Use(middleware.CORS())
 
 	// e.Use(authMiddleWare)
 	a.echo.GET("api/login", a.auth.CompleteAuth)

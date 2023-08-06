@@ -9,18 +9,18 @@ import (
 )
 
 func (auth *Authentication) GiveClient(ctx echo.Context) *spotify.Client {
-	tok := giveToken(ctx)
+	tok := giveFullToken(ctx)
 	return spotify.New(auth.spotifyauth.Client(ctx.Request().Context(), tok))
 }
 
-func giveToken(ctx echo.Context) *oauth2.Token {
+func giveFullToken(ctx echo.Context) *oauth2.Token {
 	expiry, _ := time.Parse(time.RFC3339, ctx.FormValue("expiry"))
 
 	tok := &oauth2.Token{
 		AccessToken:  ctx.Request().Header.Get("Authorization"),
 		TokenType:    ctx.FormValue("token_type"),
 		RefreshToken: ctx.FormValue("refresh_token"),
-		Expiry:       expiry, // TODO сделать нормальный time date
+		Expiry:       expiry,
 	}
 
 	return tok

@@ -13,7 +13,7 @@ type Authentication struct {
 	state       string
 }
 
-const redirectURI = "http://localhost:8080/api/login"
+const redirectURI = "http://localhost:3000/login/"
 
 func New() *Authentication {
 	confauth := envconfig.New()
