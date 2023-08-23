@@ -14,13 +14,13 @@ func (auth *Authentication) GiveClient(ctx echo.Context) *spotify.Client {
 }
 
 func giveFullToken(ctx echo.Context) *oauth2.Token {
-	expiry, _ := time.Parse(time.RFC3339, ctx.FormValue("expiry"))
+	// expiry, _ := time.Parse(time.RFC3339, ctx.FormValue("expiry"))
 
 	tok := &oauth2.Token{
 		AccessToken:  ctx.Request().Header.Get("Authorization"),
 		TokenType:    ctx.FormValue("token_type"),
 		RefreshToken: ctx.FormValue("refresh_token"),
-		Expiry:       expiry,
+		Expiry:       time.Now(),
 	}
 
 	return tok
