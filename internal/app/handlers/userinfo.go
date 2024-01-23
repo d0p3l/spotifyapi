@@ -63,3 +63,8 @@ func (auth *Authentication) UserTopTracks(ctx echo.Context) error {
 
 	return nil
 }
+
+// func (auth *Authentication) UserTopAlumbs(ctx echo.Context) error {
+// 	client := auth.GiveClient(ctx)
+// 	user, err := client.top
+// }
